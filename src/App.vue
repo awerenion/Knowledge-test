@@ -31,12 +31,10 @@
       </div>
     </div>
     <div
-      class="finalPage"
+      :send="send()"
       v-if="isShowResult"
     >
       Правильных ответов: {{ correctAnswers }}
-      <br>
-      <button @click="send()">Send Results</button>
     </div>
   </div>
 </template>
@@ -83,14 +81,12 @@ export default {
     checkAnswer(answer) {
       this.$store.dispatch('addAnswer', this.quest.correct_answer === answer)
     },
-    sendCorrectAnswers() {
-      this.$store.dispatch('sendCorrectAnswers')
-    },
     async send() {
-      const res = await fetch('http://localhost:8080/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'json'
+      if(this.questions.length <= this.indexQuest) {
+        const res = await fetch('http://localhost:8080/', {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json'
         },
         credentials: 'include',
         body: JSON.stringify({
@@ -98,6 +94,7 @@ export default {
         }),
       })
       console.log(res)
+      }
     }
   }
 }
