@@ -23,6 +23,7 @@
       </div>
       <div>
         <button
+          :send=send()
           class="btn"
           @click="nextQuestion"
          >
@@ -31,7 +32,6 @@
       </div>
     </div>
     <div
-      :send="send()"
       v-if="isShowResult"
     >
       Правильных ответов: {{ correctAnswers }}
@@ -82,10 +82,9 @@ export default {
       this.$store.dispatch('addAnswer', this.quest.correct_answer === answer)
     },
     async send() {
-      if(this.questions.length <= this.indexQuest) {
-        const res = await fetch('http://localhost:8080/', {
-          method: 'POST',
-          headers: {
+      const res = await fetch('http://localhost:8080/', {
+        method: 'POST',
+        headers: {
           'Content-Type': 'application/json'
         },
         credentials: 'include',
@@ -94,7 +93,6 @@ export default {
         }),
       })
       console.log(res)
-      }
     }
   }
 }
