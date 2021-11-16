@@ -89,7 +89,7 @@ export default {
         },
         credentials: 'include',
         body: JSON.stringify({
-          correctAnswers: this.correctAnswers
+          currentAnswer: this.currentAnswer
         }),
       })
       console.log(res)
